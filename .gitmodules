@@ -4,3 +4,9 @@
 [submodule "ThirdParty/FreeRTOS-Kernel-Community-Supported-Ports"]
 	path = portable/ThirdParty/Community-Supported-Ports
 	url = https://github.com/FreeRTOS/FreeRTOS-Kernel-Community-Supported-Ports
+[submodule "test/cbmc/aws-templates-for-cbmc-proofs"]
+	path = test/cbmc/aws-templates-for-cbmc-proofs
+	url = https://github.com/awslabs/aws-templates-for-cbmc-proofs.git
+[submodule "test/cbmc/litani"]
+	path = test/cbmc/litani
+	url = https://github.com/awslabs/aws-build-accumulator.git
