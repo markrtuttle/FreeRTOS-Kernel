@@ -502,7 +502,7 @@ void vPortDefineHeapRegions( const HeapRegion_t * const pxHeapRegions )
          * inserted at the end of the region space. */
         xAddress = xAlignedHeap + xTotalRegionSize;
         xAddress -= xHeapStructSize;
-        xAddress &= ~portBYTE_ALIGNMENT_MASK;
+        xAddress &= ~(size_t) portBYTE_ALIGNMENT_MASK;
         pxEnd = ( BlockLink_t * ) xAddress;
         pxEnd->xBlockSize = 0;
         pxEnd->pxNextFreeBlock = NULL;

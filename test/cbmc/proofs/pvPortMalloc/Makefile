@@ -13,6 +13,12 @@ INCLUDES += -I.
 REMOVE_FUNCTION_BODY +=
 UNWINDSET += pvPortMalloc.0:5
 UNWINDSET += vPortDefineHeapRegions.0:5
+UNWINDSET += __CPROVER_file_local_heap_5_c_prvInsertBlockIntoFreeList.0:5
+
+NONDET_STATIC += --nondet-static
+NONDET_STATIC += --nondet-static-exclude xNumberOfSuccessfulAllocations # zero initialized
+NONDET_STATIC += --nondet-static-exclude xNumberOfSuccessfulFrees # zero initialized
+NONDET_STATIC += --nondet-static-exclude pxEnd # NULL initialized
 
 PROOF_SOURCES += $(PROOFDIR)/$(HARNESS_FILE).c
 PROJECT_SOURCES += $(SRCDIR)/portable/MemMang/heap_5.c

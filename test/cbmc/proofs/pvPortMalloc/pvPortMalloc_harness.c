@@ -33,10 +33,10 @@ void harness()
     };
     vPortDefineHeapRegions( xHeapRegions );
 
-    __CPROVER_assume( xWantedSize1 < configTOTAL_HEAP_SIZE / 4  );
-    __CPROVER_assume( xWantedSize2 < configTOTAL_HEAP_SIZE / 4  );
-    __CPROVER_assume( xWantedSize3 > configTOTAL_HEAP_SIZE / 4  );
-    __CPROVER_assume( xWantedSize3 < configTOTAL_HEAP_SIZE / 3  );
+    __CPROVER_assume( xWantedSize1 < configTOTAL_HEAP_SIZE );
+    __CPROVER_assume( xWantedSize2 < configTOTAL_HEAP_SIZE );
+    __CPROVER_assume( xWantedSize3 < configTOTAL_HEAP_SIZE );
+    __CPROVER_assume( xWantedSize4 < configTOTAL_HEAP_SIZE );
 
     pv1 = pvPortMalloc( xWantedSize1 );
     pv2 = pvPortMalloc( xWantedSize2 );
