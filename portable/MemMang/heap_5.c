@@ -135,7 +135,8 @@ static void prvInsertBlockIntoFreeList( BlockLink_t * pxBlockToInsert );
 static const size_t xHeapStructSize = ( sizeof( BlockLink_t ) + ( ( size_t ) ( portBYTE_ALIGNMENT - 1 ) ) ) & ~( ( size_t ) portBYTE_ALIGNMENT_MASK );
 
 /* Create a couple of list links to mark the start and end of the list. */
-static BlockLink_t xStart, * pxEnd = NULL;
+//static BlockLink_t xStart, * pxEnd = NULL;
+BlockLink_t xStart, * pxEnd = NULL;
 
 /* Keeps track of the number of calls to allocate and free memory as well as the
  * number of free bytes remaining, but says nothing about fragmentation. */
