@@ -34,56 +34,42 @@ extern BlockLink_t xStart;
 extern BlockLink_t *pxEnd;
 extern size_t xFreeBytesRemaining;
 
-// copied from portable.h
-//#define portBYTE_ALIGNMENT (8)
-//#define portBYTE_ALIGNMENT_MASK ( 0x0007 )
-
-
-
 /****************************************************************/
 
 #define HEAP_SIZE 1024
 #define HEAP_BLOCKS 2
 
-typedef struct BLOCK_DESC
-{
-  size_t offset;
-  size_t size;
-} BlockDesc_t;
-
-typedef BlockDesc_t HeapDesc_t[HEAP_BLOCKS+1];
-
 void allocate_heap(uint8_t *heap, size_t heap_size) {
 
-  BlockDesc_t block_desc[HEAP_BLOCKS+1];
+  size_t offset[HEAP_BLOCKS+1];
+  size_t size[HEAP_BLOCKS+1];
 
   // Assume valid heap block descriptions
   size_t max = 0;
   for (int i = 0; i < HEAP_BLOCKS+1; i++) {
-    __CPROVER_assume((block_desc[i].offset & portBYTE_ALIGNMENT_MASK) == 0);
-    //__CPROVER_assume((block_desc[i].size & heapBLOCK_ALLOCATED_BITMASK) == 0);
-    __CPROVER_assume(max <= block_desc[i].offset);
-    __CPROVER_assume(block_desc[i].offset <= heap_size);
-    __CPROVER_assume(block_desc[i].size >= sizeof(BlockLink_t));
-    __CPROVER_assume(block_desc[i].size <= heap_size - block_desc[i].offset);
-    max = block_desc[i].offset + block_desc[i].size;
+    __CPROVER_assume((offset[i] & portBYTE_ALIGNMENT_MASK) == 0);
+    __CPROVER_assume(max <= offset[i]);
+    __CPROVER_assume(offset[i] <= heap_size);
+    __CPROVER_assume(size[i] >= sizeof(BlockLink_t));
+    __CPROVER_assume(size[i] <= heap_size - offset[i]);
+    max = offset[i] + size[i];
   }
 
   // Allocate heap with valid heap block descriptions
 
-  xStart.pxNextFreeBlock = (BlockLink_t *) (heap + block_desc[0].offset);
+  xStart.pxNextFreeBlock = (BlockLink_t *) (heap + offset[0]);
   xStart.xBlockSize = 0;
 
-  pxEnd = (BlockLink_t *) (heap + block_desc[HEAP_BLOCKS].offset);
+  pxEnd = (BlockLink_t *) (heap + offset[HEAP_BLOCKS]);
   pxEnd->pxNextFreeBlock = 0;
   pxEnd->xBlockSize = 0;
 
   xFreeBytesRemaining = 0;
   for (int i = 0; i < HEAP_BLOCKS; i++) {
-    BlockLink_t *header = (BlockLink_t *)(heap + block_desc[i].offset);
-    header->pxNextFreeBlock = (BlockLink_t *)(heap + block_desc[i+1].offset);
-    header->xBlockSize = block_desc[i].size;
-    xFreeBytesRemaining += block_desc[i].size;
+    BlockLink_t *header = (BlockLink_t *)(heap + offset[i]);
+    header->pxNextFreeBlock = (BlockLink_t *)(heap + offset[i+1]);
+    header->xBlockSize = size[i];
+    xFreeBytesRemaining += size[i];
   }
 
 }
