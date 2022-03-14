@@ -32,6 +32,7 @@ typedef struct A_BLOCK_LINK
 } BlockLink_t;
 extern BlockLink_t xStart;
 extern BlockLink_t *pxEnd;
+extern size_t xFreeBytesRemaining;
 
 // copied from portable.h
 //#define portBYTE_ALIGNMENT (8)
@@ -65,7 +66,7 @@ void allocate_heap(uint8_t *heap, size_t size) {
 
   xStart.pxNextFreeBlock = block;
   xStart.xBlockSize = 0;
-
+  xFreeBytesRemaining = size1;
 
   return;
 }

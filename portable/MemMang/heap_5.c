@@ -140,7 +140,8 @@ BlockLink_t xStart, * pxEnd = NULL;
 
 /* Keeps track of the number of calls to allocate and free memory as well as the
  * number of free bytes remaining, but says nothing about fragmentation. */
-static size_t xFreeBytesRemaining = 0U;
+//static size_t xFreeBytesRemaining = 0U;
+size_t xFreeBytesRemaining = 0U;
 static size_t xMinimumEverFreeBytesRemaining = 0U;
 static size_t xNumberOfSuccessfulAllocations = 0;
 static size_t xNumberOfSuccessfulFrees = 0;
