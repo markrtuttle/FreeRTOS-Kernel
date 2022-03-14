@@ -15,6 +15,10 @@ UNWINDSET += pvPortMalloc.0:5
 UNWINDSET += vPortDefineHeapRegions.0:5
 UNWINDSET += __CPROVER_file_local_heap_5_c_prvInsertBlockIntoFreeList.0:5
 
+UNWINDSET += allocate_heap.0:5
+UNWINDSET += allocate_heap.1:5
+UNWINDSET += valid_heap.0:5
+
 NONDET_STATIC += --nondet-static
 NONDET_STATIC += --nondet-static-exclude xNumberOfSuccessfulAllocations # zero initialized
 NONDET_STATIC += --nondet-static-exclude xNumberOfSuccessfulFrees # zero initialized
