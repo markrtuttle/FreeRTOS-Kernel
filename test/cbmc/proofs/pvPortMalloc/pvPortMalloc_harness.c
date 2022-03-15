@@ -86,8 +86,8 @@ bool valid_heap(BlockLink_t xStart, BlockLink_t *pxEnd, size_t xFreeBytesRemaini
 
   size_t free_bytes = 0;
   for (BlockLink_t *block = xStart.pxNextFreeBlock; block != pxEnd; block = block->pxNextFreeBlock) {
-    if (block > block->pxNextFreeBlock) return false;
-    if (block + block->xBlockSize > block->pxNextFreeBlock) return false;
+    if ((uint8_t*)block > (uint8_t*)block->pxNextFreeBlock) return false;
+    if ((uint8_t*)block + block->xBlockSize > (uint8_t*)block->pxNextFreeBlock) return false;
     free_bytes += block->xBlockSize;
   }
   if (xFreeBytesRemaining != free_bytes) return false;
@@ -107,5 +107,5 @@ void harness()
 
     //assert(valid_heap(xStart, pxEnd, xFreeBytesRemaining));
     void *pv = pvPortMalloc(wanted_size);
-    //assert(valid_heap(xStart, pxEnd, xFreeBytesRemaining));
+    assert(valid_heap(xStart, pxEnd, xFreeBytesRemaining));
 }
